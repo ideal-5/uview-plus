@@ -269,7 +269,8 @@
 				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
 				this.status = 'moving';
 				// 发出moving事件
-				this.$emit('changing');
+				let valueFormat = this.format(this.newValue, index);
+				this.$emit('changing',valueFormat);
 				this.updateValue(this.newValue, true, index);
 			},
 			onTouchMove(event, index = 1) {
@@ -293,14 +294,16 @@
 				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
 				this.status = 'moving';
 				// 发出moving事件
-				this.$emit('changing');
+				let valueFormat = this.format(this.newValue, index);
+				this.$emit('changing',valueFormat);
 				this.updateValue(this.newValue, true, index);
 			},
 			onTouchEnd(event, index = 1) {
 				if (this.disabled) return;
 				if (this.status === 'moving') {
 					this.updateValue(this.newValue, false, index);
-					this.$emit('change');
+					let valueFormat = this.format(this.newValue, index);
+					this.$emit('change',valueFormat);
 				}
 				this.status = 'end';
 			},
