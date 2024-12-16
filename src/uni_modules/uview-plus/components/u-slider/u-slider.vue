@@ -270,7 +270,12 @@
 				this.status = 'moving';
 				// 发出moving事件
 				let valueFormat = this.format(this.newValue, index);
-				this.$emit('changing',valueFormat);
+				if (this.isRange) {
+					this.rangeValue[index] = valueFormat;
+					this.$emit('changing',this.rangeValue);
+				} else {
+					this.$emit('changing',valueFormat);
+				}   
 				this.updateValue(this.newValue, true, index);
 			},
 			onTouchMove(event, index = 1) {
@@ -295,7 +300,12 @@
 				this.status = 'moving';
 				// 发出moving事件
 				let valueFormat = this.format(this.newValue, index);
-				this.$emit('changing',valueFormat);
+				if (this.isRange) {
+					this.rangeValue[index] = valueFormat;
+					this.$emit('changing',this.rangeValue);
+				} else {
+					this.$emit('changing',valueFormat);
+				}   
 				this.updateValue(this.newValue, true, index);
 			},
 			onTouchEnd(event, index = 1) {
@@ -303,7 +313,12 @@
 				if (this.status === 'moving') {
 					this.updateValue(this.newValue, false, index);
 					let valueFormat = this.format(this.newValue, index);
-					this.$emit('change',valueFormat);
+					if (this.isRange) {
+						this.rangeValue[index] = valueFormat;
+						this.$emit('change',this.rangeValue);
+					} else {
+						this.$emit('change',valueFormat);
+					}   
 				}
 				this.status = 'end';
 			},
@@ -333,7 +348,12 @@
 				this.newValue = ((clientX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
 				this.updateValue(this.newValue, false, 1);
 				let valueFormat = this.format(this.newValue, 1);
-				this.$emit('change',valueFormat);
+				if (this.isRange) {
+					this.rangeValue[1] = valueFormat;
+					this.$emit('change',this.rangeValue);
+				} else {
+					this.$emit('change',valueFormat);
+				} 
 				// #endif
 			},
 			updateValue(value, drag, index = 1) {
