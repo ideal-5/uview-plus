@@ -332,6 +332,8 @@
 				let clientX = event.detail.x - this.sliderRect.left
 				this.newValue = ((clientX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
 				this.updateValue(this.newValue, false, 1);
+				let valueFormat = this.format(this.newValue, 1);
+				this.$emit('change',valueFormat);
 				// #endif
 			},
 			updateValue(value, drag, index = 1) {
